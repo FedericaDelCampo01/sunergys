@@ -18,8 +18,12 @@ const slideControl = {
 };
 
 const BannerOne = () => {
-    // Codificar la URL del video para manejar espacios y caracteres especiales
-    const videoUrl = encodeURI("/assets/img/sunergys/videos/SUNENERGYS horizontal - by Matías Rapetti Marqués.mp4");
+    // URL del video de fondo del banner.
+    // Se recomienda usar una URL externa configurada en NEXT_PUBLIC_BANNER_VIDEO_URL (por ejemplo, un MP4 en Google Drive o CDN).
+    // Ejemplo en .env.local:
+    // NEXT_PUBLIC_BANNER_VIDEO_URL="https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO"
+    const videoEnvUrl = process.env.NEXT_PUBLIC_BANNER_VIDEO_URL || null;
+    const videoUrl = videoEnvUrl ? encodeURI(videoEnvUrl) : null;
     
     return (
             <>
@@ -28,6 +32,7 @@ const BannerOne = () => {
                     <SwiperSlide>
                         <div className="banner__one-image">
                             <div className="banner__one-video-full">
+                                {videoUrl && (
                                 <video 
                                     autoPlay 
                                     loop 
@@ -37,6 +42,7 @@ const BannerOne = () => {
                                 >
                                     <source src={videoUrl} type="video/mp4" />
                                 </video>
+                                )}
                             </div>
                             <div className="container">
                                 <div className="row">
@@ -58,6 +64,7 @@ const BannerOne = () => {
                     <SwiperSlide>
                         <div className="banner__one-image">
                             <div className="banner__one-video-full">
+                                {videoUrl && (
                                 <video 
                                     autoPlay 
                                     loop 
@@ -67,6 +74,7 @@ const BannerOne = () => {
                                 >
                                     <source src={videoUrl} type="video/mp4" />
                                 </video>
+                                )}
                             </div>
                             <div className="container">
                                 <div className="row">

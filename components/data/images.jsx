@@ -92,8 +92,11 @@ export const chooseUsImages = {
 };
 
 // Opción 2: Video vertical
-// Coloca tu video en: public/assets/img/sunergys/choose-us/
-export const chooseUsVideo = "/assets/img/sunergys/choose-us/choose-us-video.mp4";
+// Para evitar subir el MP4 al repositorio, se recomienda usar una URL externa (por ejemplo, Google Drive o un CDN).
+// Configura la variable de entorno NEXT_PUBLIC_CHOOSE_US_VIDEO_URL en tu .env.local con el enlace directo al MP4.
+// Ejemplo:
+// NEXT_PUBLIC_CHOOSE_US_VIDEO_URL="https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO"
+export const chooseUsVideo = process.env.NEXT_PUBLIC_CHOOSE_US_VIDEO_URL || null;
 
 // ============================================
 // VIDEOS
