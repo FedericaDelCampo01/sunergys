@@ -1,0 +1,1157 @@
+@import "../public/assets/css/fontawesome.css";
+@import "../public/assets/font/flaticon_slaze.css";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "swiper/css/bundle";
+@import "../public/assets/css/animate.css";
+@import 'react-modal-video/css/modal-video.min.css';
+@import "../public/assets/css/meanmenu.min.css";
+@import "../public/assets/sass/style.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+/* Forzar altura del banner para que el video ocupe más espacio */
+.banner__one {
+  min-height: 110vh !important;
+}
+.banner__one .swiper-wrapper,
+.banner__one .swiper-slide,
+.banner__one-image {
+  min-height: 110vh !important;
+  height: 110vh !important;
+}
+.banner__one-video-full {
+  height: 110vh !important;
+  min-height: 110vh !important;
+}
+.banner__one-content {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding-top: 30vh !important;
+}
+
+/* Reducir tamaño de fuente del banner para que no pise la imagen */
+.banner__one-content h1 {
+  font-size: 60px !important;
+  line-height: 70px !important;
+}
+
+@media (max-width: 1199px) {
+  .banner__one-content h1 {
+    font-size: 55px !important;
+    line-height: 65px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .banner__one-content h1 {
+    font-size: 45px !important;
+    line-height: 55px !important;
+  }
+}
+
+@media (max-width: 460px) {
+  .banner__one-content h1 {
+    font-size: 36px !important;
+    line-height: 46px !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .banner__one-content h1 {
+    font-size: 32px !important;
+    line-height: 42px !important;
+  }
+}
+
+/* Brand overrides: Sunergys official color palette */
+:root {
+  /* Core brand colors */
+  --primary-color-1: #061309; /* Negro principal */
+  --primary-color-2: #F95E19; /* Naranja principal de la marca */
+  --primary-color-3: #0E565D; /* Verde */
+
+  /* Neutrals */
+  --text-white: #FFFFFF;
+  --bg-white: #FFFFFF;
+  --color-2: #E5E5E5; /* Gris de la paleta */
+  --color-3: #E5E5E5; /* Se usa mucho como fondo suave */
+}
+
+/* Forzar uso de naranja en los principales llamados a la acción */
+.btn-one {
+  background: var(--primary-color-2) !important;
+}
+
+/* Subtítulos de secciones en naranja de marca */
+.subtitle-one {
+  color: var(--primary-color-2) !important;
+}
+.subtitle-one::after {
+  background: var(--primary-color-2) !important;
+}
+
+/* Acentos de links al pasar el mouse en naranja */
+a:hover {
+  color: var(--primary-color-2);
+}
+
+/* Ocultar completamente el switch dark/light - solo modo oscuro */
+.switch__tab,
+.mode__switch,
+.light-mode-title,
+.dark-mode-title {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Eliminar efecto blanco y negro de las imágenes en modo oscuro */
+.dark-mode .dark_image img,
+.dark_image img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Eliminar efecto blanco y negro del video de YouTube en el modal */
+.dark-mode iframe,
+iframe,
+.modal-video iframe,
+.video-modal iframe,
+.modal-video-body iframe {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Asegurar que las imágenes de la sección About mantengan sus colores originales */
+.about__one-left-image.dark_image img,
+.about__one-left-image img,
+.about__one-left-image-two img,
+.about__one .dark_image img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Eliminar efecto blanco y negro del breadcrumb - mantener imagen a color */
+.breadcrumb__area,
+.breadcrumb__area::before,
+.breadcrumb__area::after {
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.dark-mode .breadcrumb__area::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Ajustar posición del background para mostrar más la parte superior (paneles solares) */
+.breadcrumb__area-top {
+  background-position: center 20% !important;
+}
+
+/* Menú activo - cambiar verde a naranja */
+.header__area-menubar-center-menu ul li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -39px;
+  width: 0;
+  height: 4px;
+  background: var(--primary-color-2) !important;
+  transition: width 0.4s ease;
+}
+
+.header__area-menubar-center-menu ul li.active a,
+.header__area-menubar-center-menu ul li.active::after {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+}
+
+.header__area-menubar-center-menu ul li:hover > a,
+.header__area-menubar-center-menu ul li.menu-item-has-children:hover > a::before {
+  color: var(--primary-color-2) !important;
+}
+
+/* Asegurar que cualquier referencia a primary-color-3 en el menú sea naranja */
+.header__area-menubar-center-menu ul li.active a,
+.header__area-menubar-center-menu ul li[class*="active"] a {
+  color: var(--primary-color-2) !important;
+}
+
+/* Breadcrumb - flechita y texto "Sobre la Empresa" en naranja */
+.breadcrumb__area-content ul li,
+.breadcrumb__area-content ul li i {
+  color: var(--primary-color-2) !important;
+}
+
+/* Contadores - iconos en naranja */
+.counter__two-item i,
+.counter__two-item h3 b {
+  color: var(--primary-color-2) !important;
+}
+
+/* Equipo - fondo del overlay en naranja y centrar imágenes */
+.team__one-item-image-content {
+  background: var(--primary-color-2) !important;
+  border-radius: 10px !important;
+}
+
+.team__one-item-image {
+  height: 400px !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+}
+
+.team__one-item-image img {
+  display: block;
+  margin: 0 auto;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+}
+
+.team__one-item {
+  overflow: visible !important;
+  padding-bottom: 50px !important;
+}
+
+.team__one .row {
+  overflow: visible !important;
+}
+
+/* Centrar los bloques del equipo */
+.team__one .row {
+  justify-content: center !important;
+}
+
+/* Aumentar padding entre equipo y CTA del footer */
+.footer__cta {
+  padding-top: 80px !important;
+}
+
+/* Flechas de navegación de testimonios en naranja al hover */
+.testimonial__one-arrow-next i:hover,
+.testimonial__one-arrow-prev i:hover,
+.testimonial-service .testimonial__one-arrow-next i:hover,
+.testimonial-service .testimonial__one-arrow-prev i:hover {
+  background: var(--primary-color-2) !important;
+  color: var(--text-white) !important;
+}
+
+/* Estrellas de calificación en testimonios en naranja */
+.testimonial__one-right-item-content .rating i,
+.testimonial__one-right-item-content .rating i.fa-square-star,
+.testimonial__two-item i {
+  color: var(--primary-color-2) !important;
+}
+
+/* Paginación de testimonios en naranja */
+.testimonial__two-area .testimonial-pagination .swiper-pagination-bullet-active {
+  background: var(--primary-color-2) !important;
+}
+
+/* Header sticky - mantener fijo al hacer scroll */
+.header__sticky-sticky-menu {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999 !important;
+  width: 100%;
+  animation: header_sticky 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  background: var(--color-5) !important;
+}
+
+.header__sticky-sticky-menu .header__area-menubar {
+  background: var(--color-5) !important;
+}
+
+@keyframes header_sticky {
+  0% {
+    top: -100px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+/* Estilos para el video del banner - video de fondo completo */
+.banner__one-image {
+  position: relative;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.banner__one-video-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.banner__one-video-full::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.banner__one-video-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.banner__one-content {
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para el video del banner - versión anterior (mantener por compatibilidad) */
+.banner__one-right video,
+.banner__one-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Estilos para el video de choose-us - ajustar zoom y tamaño */
+.choose__us-area-image {
+  width: 35% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+}
+
+.choose__us-area-image video,
+.choose__us-video {
+  width: auto !important;
+  height: 110% !important;
+  max-width: 100%;
+  object-fit: contain !important;
+  display: block;
+  background: transparent !important;
+}
+
+@media (max-width: 1199px) {
+  .choose__us-area-image {
+    width: 40% !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .choose__us-area-image {
+    position: relative !important;
+    width: 100% !important;
+    height: 500px !important;
+    margin-top: 40px;
+  }
+  
+  .choose__us-area-image video,
+  .choose__us-video {
+    width: auto !important;
+    height: 100% !important;
+    max-width: 100%;
+    object-fit: contain !important;
+  }
+}
+
+/* Borde naranja en el contenido de la imagen About */
+.about__one-left-image-content {
+  border-right: 4px solid var(--primary-color-2) !important;
+}
+
+/* Hover de servicios - gris oscuro en lugar de negro/verde */
+.service__one-item:hover {
+  background: var(--color-5) !important;
+  border-color: var(--color-5) !important;
+}
+
+/* Aumentar padding entre secciones */
+.about__one.section-padding.pt-0 {
+  padding-top: 100px !important;
+  padding-bottom: 180px !important;
+}
+
+.services__one {
+  padding-top: 180px !important;
+}
+
+.choose__us {
+  padding-top: 180px !important;
+}
+
+.portfolio__one {
+  padding-top: 180px !important;
+}
+
+.work__area {
+  padding-top: 180px !important;
+}
+
+/* Estilos para las imágenes de About - mejorar visualización */
+.about__one-left-image {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about__one-left-image > img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  min-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.about__one-left-image-two {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 350px;
+  max-width: 65%;
+  z-index: 2;
+}
+
+.about__one-left-image-two img {
+  width: 100%;
+  height: auto;
+  min-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 1199px) {
+  .about__one-left-image > img {
+    max-width: 450px;
+    min-height: 430px;
+  }
+  
+  .about__one-left-image-two {
+    width: 300px;
+    max-width: 60%;
+  }
+  
+  .about__one-left-image-two img {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 991px) {
+  .about__one-left-image {
+    padding-bottom: 100px;
+  }
+  
+  .about__one-left-image > img {
+    max-width: 100%;
+    min-height: 400px;
+  }
+  
+  .about__one-left-image-two {
+    width: 250px;
+    max-width: 55%;
+  }
+  
+  .about__one-left-image-two img {
+    min-height: 240px;
+  }
+}
+
+/* Footer CTA con fondo naranja de marca y efecto */
+.footer__cta-area {
+  background: var(--primary-color-2) !important;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.footer__cta-area::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.03) 10px,
+      rgba(255, 255, 255, 0.03) 20px
+    ) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+.footer__cta-area-left,
+.footer__cta-area-right {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Imagen del CTA footer - tamaño específico 320x300 */
+.footer__cta-area-right-image {
+  width: 320px !important;
+  height: 300px !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+}
+
+.footer__cta-area-right-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Botón "Comienza hoy" y teléfono con fondo oscuro y naranja */
+.footer__cta-area-left-btn .btn-one {
+  background: var(--primary-color-1) !important;
+  color: var(--primary-color-2) !important;
+}
+
+.footer__cta-area-left-btn .btn-one::after,
+.footer__cta-area-left-btn .btn-one::before {
+  background: var(--primary-color-1) !important;
+}
+
+.footer__cta-area-left-btn .btn-one:hover {
+  color: var(--primary-color-2) !important;
+}
+
+.footer__cta-area-left-btn-tel i {
+  background: var(--primary-color-1) !important;
+  color: var(--primary-color-2) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.footer__cta-area h3 {
+  color: var(--text-white) !important;
+}
+
+.footer__cta-area-left-btn-tel .info span,
+.footer__cta-area-left-btn-tel .info h6 a {
+  color: var(--text-white) !important;
+}
+
+/* Cambiar todos los elementos verdes oscuros a naranja */
+.btn-three,
+.work__process-item p span,
+.work__area,
+.subtitle-three,
+.subtitle-three::after {
+  background: var(--primary-color-2) !important;
+}
+
+.btn-three:hover {
+  background: var(--primary-color-2) !important;
+}
+
+/* Cambiar bordes y acentos verdes a naranja */
+[style*="primary-color-3"],
+.border-color-3,
+.accent-color-3 {
+  border-color: var(--primary-color-2) !important;
+  color: var(--primary-color-2) !important;
+}
+
+/* 1. Fondo del logo SUNERGYS (header) */
+.header__area-menubar-left.one::after {
+  background: var(--primary-color-2) !important;
+}
+
+/* 2. Fondo del banner de estadísticas (Proyectos con éxito, Paneles instalados) */
+.banner__one-capacity,
+.banner__one-capacity::after {
+  background: var(--primary-color-2) !important;
+}
+
+/* 3. Barras de progreso (skill-bar y circle-bar) */
+.skillbar-bar,
+.skill__area-item-bar,
+.circle__progress-item-bar {
+  /* No forzar background aquí, se aplicará dinámicamente con conic-gradient */
+  --progressColor: var(--primary-color-2) !important;
+  --barColor: var(--color-3) !important;
+}
+
+/* Fondo estático de las barras en naranja sólido */
+.skill__area-item-inner {
+  background: var(--primary-color-2) !important;
+  opacity: 1 !important;
+}
+
+.skillbar-title {
+  background: var(--primary-color-2) !important;
+  opacity: 1 !important;
+}
+
+/* 4. Scroll to top - flecha circular */
+.scroll-up svg.scroll-circle path {
+  stroke: var(--primary-color-2) !important;
+}
+
+.scroll-up::after {
+  color: var(--primary-color-2) !important;
+}
+
+/* Cuando no está cargando, la flecha en blanco */
+.scroll-up:not(.active-scroll) svg.scroll-circle path {
+  stroke: var(--text-white) !important;
+}
+
+/* 5. Borde del teléfono en el CTA del footer - ya actualizado en _cta.scss */
+
+/* Cambios adicionales de diseño - Todo en naranja */
+
+/* 1. Barras de progreso - fondo gris oscuro, barra naranja vibrante */
+.skill__area-item-inner {
+  background: var(--color-2) !important;
+  opacity: 1 !important;
+}
+
+.skillbar-bar,
+.skill__area-item-bar {
+  background: var(--primary-color-2) !important;
+  opacity: 1 !important;
+}
+
+/* Asegurar que react-skillbars use el color naranja */
+.skillbar-bar {
+  background-color: var(--primary-color-2) !important;
+}
+
+/* 2. Botón de play del video en naranja */
+.about__one-right-bottom-video-icon.video span,
+.video-pulse.video span {
+  background: var(--primary-color-2) !important;
+  color: var(--text-white) !important;
+  border-color: var(--primary-color-2) !important;
+}
+
+.video-pulse::after,
+.video-pulse::before {
+  border-color: var(--primary-color-2) !important;
+}
+
+/* 3. "Más detalles" y iconos de servicios en naranja */
+.simple-btn {
+  color: var(--primary-color-2) !important;
+}
+
+.simple-btn:hover {
+  color: var(--primary-color-2) !important;
+}
+
+.simple-btn span::before {
+  color: var(--primary-color-2) !important;
+}
+
+.service__one-item-icon i {
+  color: var(--primary-color-2) !important;
+}
+
+/* 4. Banner CTA con fondo naranja y efecto */
+.cta__one-area {
+  background: var(--primary-color-2) !important;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.cta__one-area::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.03) 10px,
+      rgba(255, 255, 255, 0.03) 20px
+    ) !important;
+  pointer-events: none !important;
+}
+
+/* Icono del teléfono en el banner CTA con borde naranja */
+.cta__one-contact-icon i {
+  color: var(--primary-color-2) !important;
+  border: 2px solid var(--primary-color-2) !important;
+}
+
+/* 5. Iconos de features en naranja */
+.features__one-right-item-icon i {
+  color: var(--primary-color-2) !important;
+}
+
+/* 6. Números del teléfono en blanco (banner CTA) */
+.cta__one-contact-info h6,
+.cta__one-contact-info h6 a {
+  color: var(--text-white) !important;
+}
+
+/* Números del teléfono en naranja (footer) */
+.footer__cta-area-left-btn-tel h6,
+.footer__cta-area-left-btn-tel h6 a {
+  color: var(--primary-color-2) !important;
+}
+
+/* Portfolio overlay - subtítulo en naranja, título en blanco */
+.portfolio__one-item-image-content span {
+  color: var(--primary-color-2) !important;
+}
+
+.portfolio__one-item-image-content h6,
+.portfolio__one-item-image-content h6 a {
+  color: var(--text-white) !important;
+}
+
+/* Flecha del portfolio overlay en naranja */
+.portfolio__one-item-image-content > a i {
+  background: var(--primary-color-2) !important;
+}
+
+/* Portfolio 3 columnas - cambiar verde oscuro a naranja */
+.portfolio__three-page .portfolio__three-item > a i {
+  background: var(--primary-color-2) !important;
+}
+
+.portfolio__three-page .portfolio__three-item-image-content h6 a:hover,
+.portfolio__three-page .portfolio__three-item-image-content span {
+  color: var(--primary-color-2) !important;
+}
+
+/* ========================================
+   CAMBIAR TODOS LOS VERDES OSCUROS A NARANJA
+   ======================================== */
+
+/* Cambiar la variable CSS directamente - sobrescribir todos los usos */
+:root {
+  --primary-color-3: var(--primary-color-2) !important;
+}
+
+/* Iconos de consultation (handshake y otros) */
+.consultation__area-right-list-item-icon i,
+.consultation__area-right-list-item-icon::after,
+.consultation__area-left .content p span {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+}
+
+.consultation__area-right-list-item-icon::after {
+  background: var(--primary-color-2) !important;
+  opacity: 0.1 !important;
+}
+
+/* Iconos de choose-us */
+.choose__us-area-list-item > i {
+  color: var(--primary-color-2) !important;
+}
+
+/* Iconos de servicios (service-three) */
+.service__three-item-icon i,
+.service__three-item:hover .service__three-item-icon,
+.service__three-item-content .simple-btn,
+.service__three-item-content .simple-btn:hover,
+.service__three-item-content .simple-btn span::before {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+}
+
+.service__three-item {
+  border-color: var(--primary-color-2) !important;
+}
+
+.service__three-item:hover {
+  border-color: var(--primary-color-2) !important;
+}
+
+/* Subtítulos tres */
+.subtitle-three,
+.subtitle-three::after {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+}
+
+/* Botones tres */
+.btn-three {
+  background: var(--primary-color-2) !important;
+}
+
+/* Scroll to top (versión three) */
+.scroll-up.three svg.scroll-circle path {
+  stroke: var(--primary-color-2) !important;
+}
+
+/* Header menú (versión three) */
+.header__area-menubar-center-menu.three ul li:hover > a,
+.header__area-menubar-center-menu.three ul li .sub-menu li:hover > a,
+.header__area-menubar-center-menu.three ul li .sub-menu li a::after,
+.header__area-menubar-right-sidebar-popup.three .header__area-menubar-right-sidebar-popup-contact-item-content h6 a:hover,
+.header__area-menubar-right-sidebar-popup.three .header__area-menubar-right-sidebar-popup-contact-item-icon i,
+.header__area-menubar-right-sidebar-popup.three .social__icon ul li a i:hover {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+  border-color: var(--primary-color-2) !important;
+}
+
+.header__area-menubar-center-menu.three ul li .sub-menu {
+  border-color: var(--primary-color-2) !important;
+}
+
+.header__area-menubar-right-search-box.three input:focus {
+  border-color: var(--primary-color-2) !important;
+}
+
+/* Banner three */
+.banner__three-slide-area-thumb-item.active,
+.banner__three-slide-area-thumb-item:hover {
+  background: var(--primary-color-2) !important;
+}
+
+/* Footer CTA three */
+.footer__cta.three .footer__cta-area {
+  background: var(--primary-color-2) !important;
+}
+
+.footer__cta.three .footer__cta-area-item i {
+  color: var(--primary-color-2) !important;
+}
+
+/* Circle progress bar */
+.circle__progress-item-bar {
+  --progressColor: var(--primary-color-2) !important;
+}
+
+.about__one-left-image-content .circle__progress-item-bar {
+  --progressColor: var(--primary-color-2) !important;
+}
+
+/* Text slider */
+.text__slider ul li a {
+  color: var(--primary-color-2) !important;
+}
+
+/* Top bar three */
+.topBar__three-left ul li i,
+.topBar__three-right-social ul li a i:hover {
+  color: var(--primary-color-2) !important;
+  background: var(--primary-color-2) !important;
+}
+
+/* Menu bar popup three */
+.menu__bar-popup.three .mean-container .mean-nav ul li a:hover {
+  color: var(--primary-color-2) !important;
+}
+
+.menu__bar-popup.three .mean-container .mean-nav ul li a::after {
+  background: var(--primary-color-2) !important;
+}
+
+/* Home area box */
+.header__area-menubar-center-menu ul li .sub-menu.home-area li .home-area-box-item:nth-child(3) .home-area-box-item-content .two a {
+  background: var(--primary-color-2) !important;
+}
+
+/* Cualquier otro elemento que use primary-color-3 - ya cubierto por la variable CSS */
+
+/* Números de teléfono en choose-us */
+.choose__us-area-bottom-tel h6 a {
+  color: var(--primary-color-2) !important;
+}
+
+/* Work Process - borde naranja en hover */
+.work__process-item img:hover {
+  border-color: var(--primary-color-2) !important;
+}
+
+/* Sidebar - iconos en naranja y estilo outline */
+.header__area-menubar-right-sidebar-popup-contact-item-icon i {
+  color: var(--primary-color-2) !important;
+  -webkit-text-stroke: 1px var(--primary-color-2);
+  -webkit-text-fill-color: transparent;
+  font-weight: 300 !important;
+}
+
+.header__area-menubar-right-sidebar-popup-contact-item-icon i.fa-phone-alt,
+.header__area-menubar-right-sidebar-popup-contact-item-icon i.fa-envelope,
+.header__area-menubar-right-sidebar-popup-contact-item-icon i.fa-map-marker-alt {
+  -webkit-text-stroke: 1.5px var(--primary-color-2);
+  -webkit-text-fill-color: transparent;
+}
+
+/* Sidebar - botón de cerrar en naranja */
+.header__area-menubar-right-sidebar-popup .sidebar-close-btn i {
+  background: var(--primary-color-2) !important;
+}
+
+/* Portfolio Details - Achicar imagen principal */
+.portfolio__details-image img {
+  max-height: 500px !important;
+  object-fit: cover !important;
+  width: 100% !important;
+}
+
+@media (max-width: 991px) {
+  .portfolio__details-image img {
+    max-height: 400px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .portfolio__details-image img {
+    max-height: 300px !important;
+  }
+}
+
+/* Secciones de Sobre Nosotros - Cambio de color entre secciones */
+.about__section {
+  background: transparent !important; /* Mismo color que Nuestro Equipo */
+}
+
+.mission__section {
+  background: #1f1f1f !important; /* Más claro para crear contraste visible */
+}
+
+.about__section-content,
+.mission__section-content,
+.team__section-intro {
+  text-align: center !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+
+.about__section-content h2,
+.mission__section-content h2,
+.team__section-intro h2 {
+  font-size: 48px !important;
+  font-weight: 700 !important;
+  color: var(--text-white) !important;
+  margin-bottom: 20px !important;
+  line-height: 1.2 !important;
+}
+
+.about__section-divider,
+.mission__section-divider,
+.team__section-divider {
+  width: 100px !important;
+  height: 2px !important;
+  background: var(--primary-color-2) !important;
+  margin: 20px auto 30px auto !important;
+}
+
+.about__section-content p,
+.mission__section-content p,
+.team__section-intro p {
+  font-size: 18px !important;
+  line-height: 1.8 !important;
+  color: var(--text-white) !important;
+  opacity: 0.9 !important;
+}
+
+.mission__section-content p strong {
+  color: var(--primary-color-2) !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 991px) {
+  .about__section-content h2,
+  .mission__section-content h2,
+  .team__section-intro h2 {
+    font-size: 36px !important;
+  }
+  
+  .about__section-content p,
+  .mission__section-content p,
+  .team__section-intro p {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .about__section-content h2,
+  .mission__section-content h2,
+  .team__section-intro h2 {
+    font-size: 28px !important;
+  }
+}
+
+/* Títulos de servicios con el mismo tamaño que "Energía solar simple" */
+.service__one-title h2 {
+  font-size: 48px !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 991px) {
+  .service__one-title h2 {
+    font-size: 36px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .service__one-title h2 {
+    font-size: 28px !important;
+  }
+}
+
+/* Animación para el spinner del simulador */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Reducir altura y tamaño de fuente de la franja naranja del banner */
+.banner__one-capacity {
+    padding: 32px 0 !important; /* Ajustado para altura media */
+}
+
+.banner__one-capacity-item h3 {
+    font-size: 32px !important; /* Reducido del tamaño original */
+    line-height: 1.2 !important;
+    margin-bottom: 5px !important;
+}
+
+.banner__one-capacity-item h6 {
+    font-size: 12px !important; /* Reducido de 16px a 12px */
+    line-height: 1.3 !important;
+    margin-bottom: 0 !important;
+}
+
+@media (max-width: 991px) {
+    .banner__one-capacity {
+        padding: 20px 0 !important;
+    }
+    
+    .banner__one-capacity-item h3 {
+        font-size: 28px !important;
+    }
+    
+    .banner__one-capacity-item h6 {
+        font-size: 11px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .banner__one-capacity {
+        padding: 18px 0 !important;
+    }
+    
+    .banner__one-capacity-item h3 {
+        font-size: 24px !important;
+    }
+    
+    .banner__one-capacity-item h6 {
+        font-size: 10px !important;
+    }
+}
+
+/* Animaciones de scroll reveal para la sección Sobre Nosotros */
+.about__section-content,
+.mission__section-content,
+.team__section-intro {
+    will-change: opacity, transform;
+}
+
+/* Animación suave para los elementos que aparecen */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Clase para elementos que deben animarse al hacer scroll */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Botón flotante del simulador */
+.floating-simulator-btn {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(249, 94, 25, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(249, 94, 25, 0.6);
+    }
+}
+
+/* Responsive: ajustar posición en móviles */
+@media (max-width: 767px) {
+    .floating-simulator-btn {
+        bottom: 90px !important;
+        right: 15px !important;
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 20px !important;
+    }
+}
+
+/* Formulario de contacto: borde naranja en focus */
+.contact__form-area-item input:focus,
+.contact__form-area-item textarea:focus,
+.contact__form-area-item input[type="file"]:focus {
+    border-color: var(--primary-color-2) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(249, 94, 25, 0.1) !important;
+}
+
+/* Reducir paddings verticales del formulario de contacto */
+.contact__form-area {
+    padding: 50px 50px !important;
+}
+
+.contact__form-area h3 {
+    margin-bottom: 15px !important;
+}
+
+@media (max-width: 991px) {
+    .contact__form-area {
+        padding: 40px 30px !important;
+    }
+}
