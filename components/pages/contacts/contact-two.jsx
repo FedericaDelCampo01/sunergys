@@ -1,4 +1,4 @@
-    `"use client"
+"use client";
 import SEO from "@/components/data/seo";
 import HeaderOne from "@/components/layout/headers/header-one";
 import BreadCrumb from "../common/breadcrumb";
