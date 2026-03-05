@@ -5,8 +5,7 @@ import MainMenu from './header-menu';
 import Search from './search';
 import { useState } from 'react';
 import SideBar from './offcanvas';
-import logo1 from "../../../public/assets/img/logo-4.png";
-import logo2 from "../../../public/assets/img/logo-5.png";
+import logo from "../../../public/assets/img/logo.png";
 import MobileMenuPopup from './mobile-menu/menu-area';
 
 const HeaderOne = ({addClass}) => {
@@ -22,8 +21,8 @@ const HeaderOne = ({addClass}) => {
                         <div className="topBar__three-left">
                             <div className="topBar__three-left-logo lg-t-center">
                             <Link href="/">
-                                <img className='dark-n' src={logo1.src} alt="logo" />
-                                <img className='light-n' src={logo2.src} alt="logo" />
+                                <img className='dark-n' src={logo.src} alt="logo" />
+                                <img className='light-n' src={logo.src} alt="logo" />
                             </Link>
                             </div>
                         </div>
@@ -83,7 +82,7 @@ const HeaderOne = ({addClass}) => {
             </div>
         </div>
         <SideBar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} addClass={addClass} />
-        <MobileMenuPopup isOpen={menuSidebar} setIsOpen={setMenuSidebar} popupLogo={logo2} addClass="three" />
+        <MobileMenuPopup isOpen={menuSidebar} setIsOpen={setMenuSidebar} popupLogo={logo} addClass="three" />
         <Search isOpen={search} setIsOpen={setSearch} addClass={addClass} />
         </>
     );

@@ -1,6 +1,6 @@
 import Social from "@/components/data/social";
 import Link from "next/link";
-import logo from "../../../public/assets/img/logo-3.png";
+import logo from "../../../public/assets/img/logo.png";
 import ctaBg from "../../../public/assets/img/shape/shape-17.png";
 import footerBg from "../../../public/assets/img/shape/shape-13.png";
 import servicesData from "@/components/data/services-data";
