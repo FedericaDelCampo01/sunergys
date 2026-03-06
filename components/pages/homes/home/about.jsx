@@ -51,14 +51,6 @@ const About = () => {
                                         <SkillBarItem countUp={76} />
                                     </div>
                                 </div>
-                                <div className="skill__area-item">
-                                    <div className="skill__area-item-content">
-                                        <h6>Emisiones de CO₂ evitadas</h6>
-                                    </div>
-                                    <div className="skill__area-item-inner">
-                                        <SkillBarItem countUp={60} />
-                                    </div>
-                                </div>
                             </div>
                             <div className="about__one-right-bottom">
                                 <div className="about__one-right-bottom-btn">
