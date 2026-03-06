@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
-import { chooseUsImages, chooseUsVideo } from "@/components/data/images";
+import { chooseUsImages } from "@/components/data/images";
+import { videos } from "@/lib/videos";
 
 const ChooseUs = () => {
-    // Codificar la URL del video si existe
-    const videoUrl = chooseUsVideo ? encodeURI(chooseUsVideo) : null;
+    const videoUrl = videos.chooseUs;
     
     return (
         <>

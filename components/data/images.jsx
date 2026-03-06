@@ -91,12 +91,8 @@ export const chooseUsImages = {
     main: null, // No se usa cuando hay video
 };
 
-// Opción 2: Video vertical
-// Para evitar subir el MP4 al repositorio, se recomienda usar una URL externa (por ejemplo, Google Drive o un CDN).
-// Configura la variable de entorno NEXT_PUBLIC_CHOOSE_US_VIDEO_URL en tu .env.local con el enlace directo al MP4.
-// Ejemplo:
-// NEXT_PUBLIC_CHOOSE_US_VIDEO_URL="https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO"
-export const chooseUsVideo = process.env.NEXT_PUBLIC_CHOOSE_US_VIDEO_URL || null;
+// Video "Por qué elegirnos": URL centralizada en @/lib/videos (chooseUs).
+// La sección Choose Us importa desde allí. Ya no se usa variable de entorno.
 
 // ============================================
 // VIDEOS

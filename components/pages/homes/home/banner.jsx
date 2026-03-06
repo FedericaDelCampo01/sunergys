@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Autoplay} from 'swiper/modules';
 import { bannerImages } from "@/components/data/images";
+import { videos } from "@/lib/videos";
 import bannerBg from "../../../../public/assets/img/shape/shape-3.png";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,12 +19,7 @@ const slideControl = {
 };
 
 const BannerOne = () => {
-    // URL del video de fondo del banner.
-    // Se recomienda usar una URL externa configurada en NEXT_PUBLIC_BANNER_VIDEO_URL (por ejemplo, un MP4 en Google Drive o CDN).
-    // Ejemplo en .env.local:
-    // NEXT_PUBLIC_BANNER_VIDEO_URL="https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO"
-    const videoEnvUrl = process.env.NEXT_PUBLIC_BANNER_VIDEO_URL || null;
-    const videoUrl = videoEnvUrl ? encodeURI(videoEnvUrl) : null;
+    const videoUrl = process.env.NEXT_PUBLIC_BANNER_VIDEO_URL || videos.hero;
     
     return (
             <>
