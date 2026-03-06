@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Autoplay} from 'swiper/modules';
 import { bannerImages } from "@/components/data/images";
-import { videos } from "@/lib/videos";
 import bannerBg from "../../../../public/assets/img/shape/shape-3.png";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,8 +18,6 @@ const slideControl = {
 };
 
 const BannerOne = () => {
-    const videoUrl = process.env.NEXT_PUBLIC_BANNER_VIDEO_URL || videos.hero;
-    
     return (
             <>
             <div className="banner__one">
@@ -28,17 +25,13 @@ const BannerOne = () => {
                     <SwiperSlide>
                         <div className="banner__one-image">
                             <div className="banner__one-video-full">
-                                {videoUrl && (
-                                <video 
-                                    autoPlay 
-                                    loop 
-                                    muted 
-                                    playsInline
+                                <Image
+                                    src={bannerImages.slide1}
+                                    alt="Sunergys - Energía solar para tu empresa"
+                                    fill
+                                    priority
                                     className="banner__one-video-background"
-                                >
-                                    <source src={videoUrl} type="video/mp4" />
-                                </video>
-                                )}
+                                />
                             </div>
                             <div className="container">
                                 <div className="row">
@@ -60,17 +53,13 @@ const BannerOne = () => {
                     <SwiperSlide>
                         <div className="banner__one-image">
                             <div className="banner__one-video-full">
-                                {videoUrl && (
-                                <video 
-                                    autoPlay 
-                                    loop 
-                                    muted 
-                                    playsInline
+                                <Image
+                                    src={bannerImages.slide2}
+                                    alt="Sunergys - Soluciones solares a medida"
+                                    fill
+                                    priority={false}
                                     className="banner__one-video-background"
-                                >
-                                    <source src={videoUrl} type="video/mp4" />
-                                </video>
-                                )}
+                                />
                             </div>
                             <div className="container">
                                 <div className="row">

@@ -9,8 +9,9 @@
 // BANNER PRINCIPAL (Home)
 // ============================================
 // Coloca tus imágenes en: public/assets/img/sunergys/banner/
-import banner1 from "../../public/assets/img/banner/banner-1.jpg"; // Reemplazar con tu imagen
-import banner2 from "../../public/assets/img/banner/banner-3.jpg"; // Reemplazar con tu imagen
+// Para ahora usamos una foto de proyecto como hero principal.
+import banner1 from "../../public/assets/img/sunergys/portfolio/casa-la-tahona-main.jpg";
+import banner2 from "../../public/assets/img/sunergys/portfolio/casa-la-tahona-main.jpg";
 
 export const bannerImages = {
     slide1: banner1,  // Cambiar a: import banner1 from "../../public/assets/img/sunergys/banner/banner-1.jpg";

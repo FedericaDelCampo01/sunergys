@@ -4,7 +4,6 @@ import HeaderOne from "@/components/layout/headers/header-one";
 import About from "./about";
 import Simulator from "./simulator";
 import CtaSimulator from "./cta-simulator";
-import ChooseUs from "./choose-us";
 import Portfolio from "./portfolio";
 import Testimonial from "./testimonial";
 import FooterOne from "@/components/layout/footers/footer-one";
@@ -21,7 +20,6 @@ const HomeOne = () => {
             <CtaSimulator />
             <About />
             <Simulator />
-            <ChooseUs />
             <Portfolio />
             <div className="testimonial__one section-padding" style={{backgroundImage: `url(${bgImage.src})`}}>
                 <Testimonial />
