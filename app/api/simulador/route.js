@@ -77,6 +77,7 @@ function calcularAhorroAnualUSD(consumo_12_meses_kwh) {
 export async function POST(req) {
   try {
     const formData = await req.formData();
+    const email = formData.get('email');
     const file = formData.get('file');
 
     if (!file || typeof file === 'string') {
@@ -231,6 +232,86 @@ Si no encuentras ninguna tabla ni gráfico con consumos mensuales en kWh, devuel
       ahorro_anual_usd > 0
         ? Math.round((inversion_usd / ahorro_anual_usd) * 100) / 100
         : null;
+
+    // Si tenemos email del usuario y Resend configurado, reenviamos la factura al equipo de Sunergys
+    if (email && process.env.RESEND_API_KEY) {
+      try {
+        const { Resend } = require('resend');
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
+        const emailHtml = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #F95E19;">Nueva simulación desde la web</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+              Un usuario ha utilizado el simulador y subió una factura de UTE.
+            </p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Email del usuario:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${email}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Consumo últimos 12 meses (kWh):</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${consumo_12_meses_kwh}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Inversión estimada (USD):</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${inversion_usd}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Ahorro anual estimado (USD):</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${ahorro_anual_usd}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">ROI estimado (%):</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${roi_pct ?? 'N/D'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Plazo de repago (años):</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${plazo_repago_anios ?? 'N/D'}</td>
+              </tr>
+            </table>
+            <p style="margin-top: 30px; color: #999; font-size: 12px;">
+              Este email fue enviado automáticamente desde el simulador de la web de Sunergys.
+            </p>
+          </div>
+        `;
+
+        const emailText = `
+Nueva simulación desde la web
+
+Email del usuario: ${email}
+Consumo últimos 12 meses (kWh): ${consumo_12_meses_kwh}
+Inversión estimada (USD): ${inversion_usd}
+Ahorro anual estimado (USD): ${ahorro_anual_usd}
+ROI estimado (%): ${roi_pct ?? 'N/D'}
+Plazo de repago (años): ${plazo_repago_anios ?? 'N/D'}
+
+Se adjunta la imagen de la factura enviada por el usuario.
+        `.trim();
+
+        const emailData = {
+          from: process.env.FROM_EMAIL || 'noreply@sunergys.com',
+          to: 'contacto@sunergys.com',
+          subject: '[SIMULADOR] Nueva simulación con factura adjunta',
+          html: emailHtml,
+          text: emailText,
+        };
+
+        if (file) {
+          emailData.attachments = [
+            {
+              filename: file.name || 'factura-ute.jpg',
+              content: buffer,
+            },
+          ];
+        }
+
+        await resend.emails.send(emailData);
+      } catch (emailError) {
+        console.error('[SIMULADOR] Error enviando email con Resend:', emailError);
+      }
+    }
 
     return NextResponse.json({
       consumo_12_meses_kwh,
