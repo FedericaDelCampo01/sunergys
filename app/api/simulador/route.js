@@ -6,7 +6,7 @@ const openai = new OpenAI({
 });
 
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8 MB
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png'];
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
 
 /**
  * Calcula la inversión en USD a partir del consumo anual (suma de 12 meses kWh).
@@ -100,7 +100,7 @@ export async function POST(req) {
       return NextResponse.json(
         {
           error:
-            'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG o PNG).',
+            'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG o PNG) o PDFs.',
         },
         { status: 400 },
       );
@@ -121,7 +121,6 @@ export async function POST(req) {
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const base64 = buffer.toString('base64');
 
     const prompt = `
 En esta factura de UTE (o factura eléctrica similar), busca la sección que muestre la evolución del consumo de energía en kWh por mes.
@@ -146,26 +145,91 @@ Si no encuentras ninguna tabla ni gráfico con consumos mensuales en kWh, devuel
 }
     `.trim();
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4.1-mini',
-      response_format: { type: 'json_object' },
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
+    let raw;
+
+    if (mimeType === 'application/pdf') {
+      // Flujo para PDF: subir el archivo como File a OpenAI y usar Responses API
+      let uploadedFile;
+      try {
+        uploadedFile = await openai.files.create({
+          file, // File nativo del App Router, el SDK arma multipart/form-data
+          purpose: 'assistants',
+        });
+      } catch (apiError) {
+        console.error('[SIMULADOR] Error subiendo PDF a OpenAI Files:', apiError);
+        if (apiError?.status === 413) {
+          return NextResponse.json(
             {
-              type: 'image_url',
-              image_url: {
-                url: `data:${mimeType};base64,${base64}`,
-              },
+              error:
+                'El PDF es demasiado pesado para analizarlo automáticamente. Probá con un archivo más liviano o recortado, o subí una imagen de la factura.',
+            },
+            { status: 400 },
+          );
+        }
+        throw apiError;
+      }
+
+      try {
+        const response = await openai.responses.create({
+          model: 'gpt-4.1-mini',
+          input: [
+            {
+              role: 'user',
+              content: [
+                { type: 'input_text', text: prompt },
+                {
+                  type: 'input_file',
+                  file_id: uploadedFile.id,
+                },
+              ],
             },
           ],
-        },
-      ],
-    });
+          text: {
+            format: {
+              type: 'json_object',
+            },
+          },
+        });
 
-    const raw = completion.choices[0]?.message?.content;
+        raw = response.output?.[0]?.content?.[0]?.text;
+      } catch (apiError) {
+        console.error('[SIMULADOR] Error llamando a OpenAI Responses para PDF:', apiError);
+        if (apiError?.status === 413) {
+          return NextResponse.json(
+            {
+              error:
+                'La factura en PDF es demasiado pesada o compleja para analizarla automáticamente. Probá con un archivo más liviano o recortado, o subí una imagen de la factura.',
+            },
+            { status: 400 },
+          );
+        }
+        throw apiError;
+      }
+    } else {
+      // Flujo original para imágenes: chat.completions con image_url en base64
+      const base64 = buffer.toString('base64');
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4.1-mini',
+        response_format: { type: 'json_object' },
+        messages: [
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: prompt },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: `data:${mimeType};base64,${base64}`,
+                },
+              },
+            ],
+          },
+        ],
+      });
+
+      raw = completion.choices[0]?.message?.content;
+    }
 
     if (!raw) {
       return NextResponse.json(

@@ -247,7 +247,7 @@ const Simulator = () => {
                                 }}>
                                     <input
                                         type="file"
-                                        accept="image/*"
+                                        accept="image/*,application/pdf"
                                         onChange={handleFileChange}
                                         style={{ display: 'none' }}
                                     />
@@ -296,7 +296,7 @@ const Simulator = () => {
                                 marginTop: '20px',
                                 marginBottom: 0
                             }}>
-                                Aceptamos solo imágenes (JPG o PNG) o foto tomada en el momento.<br />
+                                Aceptamos imágenes (JPG o PNG), PDFs de la factura o foto tomada en el momento.<br />
                                 Solo necesitamos que se vea el consumo (kWh) y los datos principales.
                             </p>
 
