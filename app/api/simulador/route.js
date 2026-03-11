@@ -129,7 +129,28 @@ Puede aparecer como:
 - Una tabla (por ejemplo "Evolución de consumo de energía activa (kWh)", "Evolución en el Consumo Eléctrico", o título similar).
 - Un gráfico de barras donde el eje Y sea kWh y el eje X muestre meses (ej.: Fb, Mr, Ab, My, Jn, Jl, Ag, St, Oc, Nv, Dc, En).
 
-Extrae los valores de consumo (kWh) de los últimos 12 meses, en orden cronológico (del más antiguo al más reciente). Si es un gráfico, estima el valor de cada barra según la escala del eje Y.
+IMPORTANTE:
+- Si es un gráfico de barras, SOLO debes considerar los meses que tengan una barra visible con altura distinta de cero.
+- Si un mes aparece etiquetado en el eje X pero NO tiene barra visible, ese mes NO tiene dato.
+- Mes sin barra visible NO es 0 kWh: es un mes sin información y no debe contarse.
+
+1) Extrae todos los valores de consumo mensual en kWh que realmente estén disponibles (tabla o barras visibles).
+2) Ordénalos cronológicamente (del más antiguo al más reciente), respetando el orden natural de los meses mostrados.
+
+CASO A:
+Si encuentras exactamente 12 meses con datos reales (12 valores válidos), devuelve esos 12 valores en orden cronológico.
+
+CASO B:
+Si encuentras menos de 12 meses con datos reales:
+- Calcula la suma de los meses encontrados.
+- Calcula el promedio mensual = suma / cantidad_de_meses_encontrados.
+- Devuelve un array de 12 posiciones donde todos los valores sean ese promedio mensual.
+- No inventes valores individuales por mes.
+- No completes con ceros.
+- No asumas consumos para meses sin barra.
+
+CASO C:
+Si no encuentras ninguna tabla ni gráfico con consumos mensuales reales en kWh, devuelve null.
 
 Devuelve únicamente JSON válido con este formato:
 
@@ -138,11 +159,6 @@ Devuelve únicamente JSON válido con este formato:
 }
 
 No agregues texto adicional.
-Si no encuentras ninguna tabla ni gráfico con consumos mensuales en kWh, devuelve:
-
-{
-  "ultimos_12_meses_kwh": null
-}
     `.trim();
 
     let raw;
