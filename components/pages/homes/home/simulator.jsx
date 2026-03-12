@@ -113,7 +113,7 @@ const Simulator = () => {
                                 border: '1px solid rgba(249, 94, 25, 0.2)',
                                 borderRadius: '12px',
                                 padding: '35px',
-                                marginBottom: '40px',
+                                marginBottom: '30px',
                                 textAlign: 'left'
                             }}>
                                 <p style={{
@@ -166,6 +166,31 @@ const Simulator = () => {
                                 }}>
                                     Sin compromiso. En pocos pasos.
                                 </p>
+                            </div>
+
+                            {/* Aviso para consumos altos */}
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: '10px',
+                                marginBottom: '35px'
+                            }}>
+                                <p style={{
+                                    fontSize: '15px',
+                                    color: 'rgba(255, 255, 255, 0.9)',
+                                    margin: 0
+                                }}>
+                                    Si tu consumo anual supera los <span style={{ color: 'var(--primary-color-2)', fontWeight: 600 }}>30.000 kWh</span>,
+                                    es mejor que conversemos tu caso en detalle.
+                                </p>
+                                <a
+                                    href="/contact"
+                                    className="btn-one"
+                                    style={{ padding: '10px 24px', fontSize: '14px' }}
+                                >
+                                    Contactanos para un estudio a medida
+                                </a>
                             </div>
 
                             {/* Campo de email obligatorio */}
@@ -294,19 +319,10 @@ const Simulator = () => {
                                 fontSize: '14px',
                                 color: 'rgba(255, 255, 255, 0.6)',
                                 marginTop: '20px',
-                                marginBottom: 8
+                                marginBottom: 0
                             }}>
                                 Aceptamos imágenes (JPG o PNG), PDFs de la factura o foto tomada en el momento.<br />
                                 Solo necesitamos que se vea el consumo (kWh) y los datos principales.
-                            </p>
-                            <p style={{
-                                fontSize: '14px',
-                                color: 'rgba(255, 255, 255, 0.8)',
-                                marginTop: 4,
-                                marginBottom: 0,
-                                fontWeight: 500
-                            }}>
-                                Si tu consumo anual supera los <span style={{ color: 'var(--primary-color-2)' }}>30.000 kWh</span>, te recomendamos contactarnos directamente para un estudio a medida.
                             </p>
 
                             {/* Loading */}
