@@ -294,10 +294,19 @@ const Simulator = () => {
                                 fontSize: '14px',
                                 color: 'rgba(255, 255, 255, 0.6)',
                                 marginTop: '20px',
-                                marginBottom: 0
+                                marginBottom: 8
                             }}>
                                 Aceptamos imágenes (JPG o PNG), PDFs de la factura o foto tomada en el momento.<br />
                                 Solo necesitamos que se vea el consumo (kWh) y los datos principales.
+                            </p>
+                            <p style={{
+                                fontSize: '14px',
+                                color: 'rgba(255, 255, 255, 0.8)',
+                                marginTop: 4,
+                                marginBottom: 0,
+                                fontWeight: 500
+                            }}>
+                                Si tu consumo anual supera los <span style={{ color: 'var(--primary-color-2)' }}>30.000 kWh</span>, te recomendamos contactarnos directamente para un estudio a medida.
                             </p>
 
                             {/* Loading */}
