@@ -3,8 +3,8 @@ import bautistaImage from "../../public/assets/img/sunergys/team/bautista-de-cas
 import liesvyImage from "../../public/assets/img/sunergys/team/liesvy-delgado.jpeg";
 import margaritaImage from "../../public/assets/img/sunergys/team/margarita-navarro.jpeg";
 import faustinaImage from "../../public/assets/img/sunergys/team/faustina-torrendell.jpeg";
-import veronicaImage from "../../public/assets/img/sunergys/team/Verónica-Magnasco.jpeg";
-import richardImage from "../../public/assets/img/sunergys/team/Ing.Richard-Cruz.jpeg";
+import veronicaImage from "../../public/assets/img/sunergys/team/veronica-magnasco.jpeg";
+import richardImage from "../../public/assets/img/sunergys/team/richard-cruz.jpeg";
 
 const teamData = [
     {
