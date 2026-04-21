@@ -6,9 +6,23 @@ const Team = () => {
         <>
         <div className="team__one">
             <div className="container">
-                <div className="row dark_image justify-content-center">
+                <div
+                    className="dark_image"
+                    style={{
+                        display: 'flex',
+                        flexWrap: 'nowrap',
+                        gap: '24px',
+                        overflowX: 'auto',
+                        paddingBottom: '10px'
+                    }}
+                >
                     {teamData?.map((data, id) => (
-                    <div className="col-lg-3 col-md-6 mb-35" key={id}>
+                    <div
+                        key={id}
+                        style={{
+                            flex: '0 0 260px'
+                        }}
+                    >
                         <div className="team__one-item">
                             <div className="team__one-item-image">
                                 <img src={data.image.src} alt="image" />
