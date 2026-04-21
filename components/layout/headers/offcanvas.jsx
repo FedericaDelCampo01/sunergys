@@ -23,7 +23,7 @@ const SideBar = ({ isOpen, setIsOpen, addClass }) => {
 						</div>
 						<div className="header__area-menubar-right-sidebar-popup-contact-item-content">
 							<span>Llamar Ahora</span>
-							<h6><Link href="tel:+598095898008">+598 095 898 008</Link></h6>
+							<h6><Link href="tel:+59895898008">+598 95 898 008</Link></h6>
 						</div>
 					</div>
 					<div className="header__area-menubar-right-sidebar-popup-contact-item">

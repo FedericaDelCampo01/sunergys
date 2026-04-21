@@ -41,7 +41,7 @@ const ChooseUs = () => {
                                 <div className="choose__us-area-bottom">
                                     <Link className="btn-one" href="/contact">Conoce más</Link>
                                     <div className="choose__us-area-bottom-tel sm-mt-25">
-                                        <h6>¿Tienes alguna pregunta?<br/>Contáctanos al <Link href="tel:+598095898008">+598 095 898 008</Link></h6>
+                                        <h6>¿Tienes alguna pregunta?<br/>Contáctanos al <Link href="tel:+59895898008">+598 95 898 008</Link></h6>
                                     </div>
                                 </div>
                                 <div className="choose__us-area-image dark_image">

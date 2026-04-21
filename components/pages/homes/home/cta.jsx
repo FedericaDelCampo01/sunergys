@@ -22,7 +22,7 @@ const CtaArea = () => {
                                         </div>
                                         <div className="cta__one-contact-info">
                                             <span>Contacto gratuito 24/7</span>
-                                            <h6><Link href="tel:+598095898008">+598 095 898 008</Link></h6>
+                                            <h6><Link href="tel:+59895898008">+598 95 898 008</Link></h6>
                                         </div>
                                     </div>
                                 </div>

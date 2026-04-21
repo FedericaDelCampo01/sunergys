@@ -76,7 +76,7 @@ const ContactUs = () => {
                                             margin: 0,
                                             lineHeight: '1.4'
                                         }}>
-                                            <Link href="tel:+598095898008" style={{color: 'inherit', textDecoration: 'none'}}>+598 095 898 008</Link>
+                                            <Link href="tel:+59895898008" style={{color: 'inherit', textDecoration: 'none'}}>+598 95 898 008</Link>
                                         </h6>
                                     </div>
                                 </div>

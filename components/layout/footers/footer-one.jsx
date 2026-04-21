@@ -23,7 +23,7 @@ const FooterOne = () => {
                                                 <i className="flaticon-phone-call"></i>
                                                 <div className="info">
                                                     <span>¿Necesitas ayuda?</span>
-                                                    <h6><Link href="tel:+598095898008">+598 095 898 008</Link></h6>
+                                                    <h6><Link href="tel:+59895898008">+598 95 898 008</Link></h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@ const FooterOne = () => {
                                 <div className="footer__area-widget">
                                     <h6>Teléfono</h6>
                                     <div className="footer__area-widget-info mb-35">
-                                        <p><Link href="tel:+598095898008">+598 095 898 008</Link></p>
+                                        <p><Link href="tel:+59895898008">+598 95 898 008</Link></p>
                                     </div>
                                     <h6>Correo</h6>
                                     <div className="footer__area-widget-info">
