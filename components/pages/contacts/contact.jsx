@@ -19,7 +19,7 @@ const ContactUs = () => {
                         <div className="col-xl-12">
                             <div style={{
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
                                 gap: '25px',
                                 alignItems: 'stretch'
                             }}>
