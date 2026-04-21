@@ -21,7 +21,7 @@ const HeaderOne = ({addClass}) => {
                         <div className="topBar__one-left lg-t-center">
                             <ul>
                                 <li><Link href="mailto:need.help@gmail.com"><i className="flaticon-envelope"></i>need.help@gmail.com</Link></li>
-                                <li><Link href="https://google.com/maps"><i className="flaticon-placeholder"></i>Havre 2210, Montevideo, Uruguay</Link></li>
+                                <li><Link href="https://www.google.com/maps?q=Havre+2210,+Montevideo,+Uruguay"><i className="flaticon-placeholder"></i>Havre 2210, Montevideo, Uruguay</Link></li>
                             </ul>
                         </div>
                     </div>

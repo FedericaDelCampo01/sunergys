@@ -192,7 +192,7 @@ const ContactUs = () => {
                                             margin: 0,
                                             lineHeight: '1.4'
                                         }}>
-                                            <Link href="https://google.com/maps" style={{color: 'inherit', textDecoration: 'none'}}>Havre 2210, Montevideo, Uruguay</Link>
+                                            <Link href="https://www.google.com/maps?q=Havre+2210,+Montevideo,+Uruguay" style={{color: 'inherit', textDecoration: 'none'}}>Havre 2210, Montevideo, Uruguay</Link>
                                         </h6>
                                     </div>
                                 </div>

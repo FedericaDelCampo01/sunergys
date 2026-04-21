@@ -51,7 +51,7 @@ const FooterOne = () => {
                                 <Link href="/"><img src={logo.src} alt="Logo-image" /></Link>
                             </div>
                             <div className="footer__area-widget-company">
-                                <p><Link href="https://google.com/maps">Havre 2210, Montevideo, Uruguay</Link></p>
+                                <p><Link href="https://www.google.com/maps?q=Havre+2210,+Montevideo,+Uruguay">Havre 2210, Montevideo, Uruguay</Link></p>
                                 <div className="social__icon mt-60">
                                     <Social />
                                 </div>

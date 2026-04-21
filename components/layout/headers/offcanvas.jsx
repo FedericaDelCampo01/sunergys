@@ -41,7 +41,7 @@ const SideBar = ({ isOpen, setIsOpen, addClass }) => {
 						</div>
 						<div className="header__area-menubar-right-sidebar-popup-contact-item-content">
 							<span>Nuestra Oficina</span>
-							<h6><Link href="https://google.com/maps" target="_blank">Havre 2210, Montevideo, Uruguay</Link></h6>
+							<h6><Link href="https://www.google.com/maps?q=Havre+2210,+Montevideo,+Uruguay" target="_blank">Havre 2210, Montevideo, Uruguay</Link></h6>
 						</div>
 					</div>
 				</div>
