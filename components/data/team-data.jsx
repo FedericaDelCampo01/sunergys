@@ -3,6 +3,8 @@ import bautistaImage from "../../public/assets/img/sunergys/team/bautista-de-cas
 import liesvyImage from "../../public/assets/img/sunergys/team/liesvy-delgado.jpeg";
 import margaritaImage from "../../public/assets/img/sunergys/team/margarita-navarro.jpeg";
 import faustinaImage from "../../public/assets/img/sunergys/team/faustina-torrendell.jpeg";
+import veronicaImage from "../../public/assets/img/sunergys/team/Verónica-Magnasco.jpeg";
+import richardImage from "../../public/assets/img/sunergys/team/Ing.Richard-Cruz.jpeg";
 
 const teamData = [
     {
@@ -55,6 +57,34 @@ const teamData = [
         mail: 'faustina@sunergys.com',
         phone: '+598 XX XXX XXX',
         category: 'marketing',
+        social_link: [
+            { link: 'https://linkedin.com', target: '_blank', icon: <i className="fab fa-linkedin-in"></i> },
+            { link: 'https://twitter.com', target: '_blank', icon: <i className="fa-brands fa-x-twitter"></i> },
+            { link: 'https://facebook.com', target: '_blank', icon: <i className="fab fa-facebook-f"></i> },
+        ],
+    },
+    {
+        id: 'veronica-magnasco',
+        image: veronicaImage,
+        name: 'Verónica Magnasco',
+        position: 'Arquitecta',
+        mail: 'contacto@sunergys.com',
+        phone: '+598 XX XXX XXX',
+        category: 'projects',
+        social_link: [
+            { link: 'https://linkedin.com', target: '_blank', icon: <i className="fab fa-linkedin-in"></i> },
+            { link: 'https://twitter.com', target: '_blank', icon: <i className="fa-brands fa-x-twitter"></i> },
+            { link: 'https://facebook.com', target: '_blank', icon: <i className="fab fa-facebook-f"></i> },
+        ],
+    },
+    {
+        id: 'richard-cruz',
+        image: richardImage,
+        name: 'Ing. Richard Cruz',
+        position: 'Jefe de Obras',
+        mail: 'contacto@sunergys.com',
+        phone: '+598 XX XXX XXX',
+        category: 'projects',
         social_link: [
             { link: 'https://linkedin.com', target: '_blank', icon: <i className="fab fa-linkedin-in"></i> },
             { link: 'https://twitter.com', target: '_blank', icon: <i className="fa-brands fa-x-twitter"></i> },
