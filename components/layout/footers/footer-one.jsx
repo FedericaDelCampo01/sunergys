@@ -92,16 +92,8 @@ const FooterOne = () => {
             <div className="copyright__area lg-t-center">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-6">
+                        <div className="col-lg-12">
                             <p>Copyright 2024 - Todos los derechos reservados por Sunergys</p>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="copyright__area-menu t-right lg-t-center lg-mt-5">
-                                <ul>
-                                    <li><Link href="/contact-two">Política de Privacidad</Link></li>
-                                    <li><Link href="/contact-two">Términos y Condiciones</Link></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
