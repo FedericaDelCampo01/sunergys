@@ -5,6 +5,9 @@ import LayoutEffects from "@/components/common/layout-effects";
 export const metadata = {
     title: "Sunergys | Soluciones de Energia Solar",
     description: "Soluciones solares personalizadas para hogares y empresas.",
+    verification: {
+        google: "lu254ZmGY_wdV3K_Q-uPTJPwh28uS8Vj4JFEi9iU1Q4",
+    },
 };
 
 export default function RootLayout({ children }) {
