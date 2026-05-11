@@ -26,7 +26,7 @@ const Simulator = () => {
             '$' + Number(value || 0).toLocaleString('es-UY');
 
         const inversionRaw = inversionUsd != null ? inversionUsd : (consumo / 585 * 165);
-        const cuota36Raw = inversionRaw / 36;
+        const cuota36Raw = (inversionRaw * 1.22) / 36;
 
         return {
             inversion: formatUSD(inversionRaw),
