@@ -25,11 +25,15 @@ const Simulator = () => {
         const formatUY = (value) =>
             '$' + Number(value || 0).toLocaleString('es-UY');
 
+        const inversionRaw = inversionUsd != null ? inversionUsd : (consumo / 585 * 165);
+        const cuota36Raw = inversionRaw / 36;
+
         return {
-            inversion: inversionUsd != null ? formatUSD(inversionUsd) : formatUSD(consumo / 585 * 165),
+            inversion: formatUSD(inversionRaw),
             tiempoRecupero: apiData.plazo_repago_anios != null ? `${Number(apiData.plazo_repago_anios).toFixed(1)} años` : `${tiempoRecuperoAnios.toFixed(1)} años`,
             roiPct: apiData.roi_pct != null ? `${Number(apiData.roi_pct).toFixed(1)} %` : null,
             ahorroAnual: ahorroAnualUsd != null ? formatUSD(ahorroAnualUsd) : formatUY(ahorroAnualFallback),
+            cuota36: formatUSD(cuota36Raw),
         };
     };
 
@@ -595,6 +599,35 @@ const Simulator = () => {
                                             fontWeight: '500'
                                         }}>
                                             Ahorro anual estimado (USD)
+                                        </div>
+                                    </div>
+
+                                    {/* Financiación */}
+                                    <div style={{
+                                        marginTop: '20px',
+                                        padding: '20px 25px',
+                                        background: 'rgba(249, 94, 25, 0.08)',
+                                        border: '1px solid rgba(249, 94, 25, 0.3)',
+                                        borderRadius: '12px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        flexWrap: 'wrap',
+                                        gap: '12px'
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            <i className="fa-regular fa-credit-card" style={{ fontSize: '22px', color: 'var(--primary-color-2)' }}></i>
+                                            <span style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-white)' }}>
+                                                Financiación 36 cuotas — tasa 0%
+                                            </span>
+                                        </div>
+                                        <div style={{ textAlign: 'right' }}>
+                                            <div style={{ fontSize: '26px', fontWeight: '700', color: 'var(--primary-color-2)', lineHeight: '1' }}>
+                                                {results.cuota36}
+                                            </div>
+                                            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', marginTop: '4px' }}>
+                                                por cuota — IVA incluido
+                                            </div>
                                         </div>
                                     </div>
 
