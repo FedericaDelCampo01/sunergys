@@ -2,6 +2,7 @@
 * Menu Bar CSS
 ==========================================================================*/
 .header__area {
+    overflow-x: clip;
     &-menubar {
         display: flex;
         justify-content: space-between;
