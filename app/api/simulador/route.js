@@ -60,13 +60,20 @@ function calcularInversionUSD(consumo_12_meses_kwh) {
   };
 }
 
-const TC = 38.4; // Tipo de cambio UYU/USD
+async function fetchTipoCambio() {
+  const res = await fetch('https://uy.dolarapi.com/v1/cotizaciones/usd', {
+    next: { revalidate: 0 }, // sin caché, siempre fresco
+  });
+  if (!res.ok) throw new Error(`Error al obtener tipo de cambio: ${res.status}`);
+  const { compra, venta } = await res.json();
+  return (compra + venta) / 2;
+}
 
-function calcularAhorroAnualUSD(consumo_12_meses_kwh) {
+function calcularAhorroAnualUSD(consumo_12_meses_kwh, tc) {
   const consumo = Number(consumo_12_meses_kwh) || 0;
   if (consumo <= 0) return 0;
   const consumo_anual_UY = consumo * 5.76576 * 1.22;
-  const ahorro_anual = consumo_anual_UY / TC;
+  const ahorro_anual = consumo_anual_UY / tc;
   return Math.round(ahorro_anual * 100) / 100;
 }
 
@@ -249,7 +256,9 @@ No agregues texto adicional.
     const { inversion_usd, nro_paneles, potencia_calculada } =
       calcularInversionUSD(consumo_12_meses_kwh);
 
-    const ahorro_anual_usd = calcularAhorroAnualUSD(consumo_12_meses_kwh);
+    const tc = await fetchTipoCambio();
+    console.log(`[SIMULADOR] Tipo de cambio USD/UYU: ${tc.toFixed(4)}`);
+    const ahorro_anual_usd = calcularAhorroAnualUSD(consumo_12_meses_kwh, tc);
 
     const roi_pct =
       inversion_usd > 0 && ahorro_anual_usd > 0
