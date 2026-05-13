@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+const MODEL = 'claude-sonnet-4-6';
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8 MB
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
 
@@ -19,20 +20,17 @@ function calcularInversionUSD(consumo_12_meses_kwh) {
   const potencia_calculada = consumo / 1300;
   const nro_paneles = Math.round((potencia_calculada * 1000) / 585);
 
-  // Inversor: rango (sin incluir el mayor) → precio unitario (cantidad = 1)
   let inversor_costo = 857;
   if (potencia_calculada <= 5) inversor_costo = 857;
   else if (potencia_calculada <= 8) inversor_costo = 1324;
   else if (potencia_calculada <= 12) inversor_costo = 1754;
   else if (potencia_calculada <= 22) inversor_costo = 2638;
   else if (potencia_calculada <= 44) inversor_costo = 3389;
-  else inversor_costo = 3389; // > 44 kW, mismo que último rango
+  else inversor_costo = 3389;
 
-  // Costo insumo = (nro paneles)*115 + (nro paneles)*50 + 78 + 27.30 + 14.82 + inversor
   const costo_insumo =
     nro_paneles * 115 + nro_paneles * 50 + 78 + 27.3 + 14.82 + inversor_costo;
 
-  // Instalación: 1300 + oficial*66.67 + medio_oficial*200 + insumos*1000 + transporte_grua*1200
   const oficial = nro_paneles <= 19 ? 5 : 10;
   const medio_oficial = nro_paneles <= 19 ? 1 : 2;
   const insumos = nro_paneles <= 24 ? 1 : 2;
@@ -46,7 +44,6 @@ function calcularInversionUSD(consumo_12_meses_kwh) {
 
   const costos_totales = costo_insumo + costo_instalacion;
 
-  // Porcentaje margen según consumo
   let porcentaje_margen = 0.55;
   if (consumo < 12000) porcentaje_margen = 0.55;
   else if (consumo < 18000) porcentaje_margen = 0.5;
@@ -65,13 +62,27 @@ function calcularInversionUSD(consumo_12_meses_kwh) {
 
 const TC = 38.4; // Tipo de cambio UYU/USD
 
-/** Ahorro anual (USD) = consumo anual UY / TC; consumo anual UY = consumo_IA * 5.76576 * 1.22 */
 function calcularAhorroAnualUSD(consumo_12_meses_kwh) {
   const consumo = Number(consumo_12_meses_kwh) || 0;
   if (consumo <= 0) return 0;
   const consumo_anual_UY = consumo * 5.76576 * 1.22;
   const ahorro_anual = consumo_anual_UY / TC;
   return Math.round(ahorro_anual * 100) / 100;
+}
+
+function extraerJSON(texto) {
+  // Intento directo
+  try {
+    return JSON.parse(texto);
+  } catch (_) {}
+  // Extrae el primer bloque {...} del texto por si Claude agregó algo extra
+  const match = texto.match(/\{[\s\S]*\}/);
+  if (match) {
+    try {
+      return JSON.parse(match[0]);
+    } catch (_) {}
+  }
+  return null;
 }
 
 export async function POST(req) {
@@ -98,29 +109,22 @@ export async function POST(req) {
 
     if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
       return NextResponse.json(
-        {
-          error:
-            'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG o PNG) o PDFs.',
-        },
+        { error: 'Tipo de archivo no permitido. Solo se aceptan imágenes (JPG o PNG) o PDFs.' },
         { status: 400 },
       );
     }
 
-    if (!process.env.OPENAI_API_KEY) {
-      console.warn(
-        '[SIMULADOR] OPENAI_API_KEY no está configurada. Devuelve error de configuración.',
-      );
+    if (!process.env.ANTHROPIC_API_KEY) {
+      console.warn('[SIMULADOR] ANTHROPIC_API_KEY no está configurada.');
       return NextResponse.json(
-        {
-          error:
-            'Servicio de análisis no configurado. Falta la OPENAI_API_KEY en el servidor.',
-        },
+        { error: 'Servicio de análisis no configurado. Falta la ANTHROPIC_API_KEY en el servidor.' },
         { status: 500 },
       );
     }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+    const base64 = buffer.toString('base64');
 
     const prompt = `
 En esta factura de UTE (o factura eléctrica similar), busca la sección que muestre la evolución del consumo de energía en kWh por mes.
@@ -161,90 +165,42 @@ Devuelve únicamente JSON válido con este formato:
 No agregues texto adicional.
     `.trim();
 
+    // Construcción del bloque de contenido según tipo de archivo
+    const fileBlock = mimeType === 'application/pdf'
+      ? {
+          type: 'document',
+          source: { type: 'base64', media_type: 'application/pdf', data: base64 },
+        }
+      : {
+          type: 'image',
+          source: { type: 'base64', media_type: mimeType, data: base64 },
+        };
+
     let raw;
-
-    if (mimeType === 'application/pdf') {
-      // Flujo para PDF: subir el archivo como File a OpenAI y usar Responses API
-      let uploadedFile;
-      try {
-        uploadedFile = await openai.files.create({
-          file, // File nativo del App Router, el SDK arma multipart/form-data
-          purpose: 'assistants',
-        });
-      } catch (apiError) {
-        console.error('[SIMULADOR] Error subiendo PDF a OpenAI Files:', apiError);
-        if (apiError?.status === 413) {
-          return NextResponse.json(
-            {
-              error:
-                'El PDF es demasiado pesado para analizarlo automáticamente. Probá con un archivo más liviano o recortado, o subí una imagen de la factura.',
-            },
-            { status: 400 },
-          );
-        }
-        throw apiError;
-      }
-
-      try {
-        const response = await openai.responses.create({
-          model: 'gpt-4.1-mini',
-          input: [
-            {
-              role: 'user',
-              content: [
-                { type: 'input_text', text: prompt },
-                {
-                  type: 'input_file',
-                  file_id: uploadedFile.id,
-                },
-              ],
-            },
-          ],
-          text: {
-            format: {
-              type: 'json_object',
-            },
-          },
-        });
-
-        raw = response.output?.[0]?.content?.[0]?.text;
-      } catch (apiError) {
-        console.error('[SIMULADOR] Error llamando a OpenAI Responses para PDF:', apiError);
-        if (apiError?.status === 413) {
-          return NextResponse.json(
-            {
-              error:
-                'La factura en PDF es demasiado pesada o compleja para analizarla automáticamente. Probá con un archivo más liviano o recortado, o subí una imagen de la factura.',
-            },
-            { status: 400 },
-          );
-        }
-        throw apiError;
-      }
-    } else {
-      // Flujo original para imágenes: chat.completions con image_url en base64
-      const base64 = buffer.toString('base64');
-
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4.1-mini',
-        response_format: { type: 'json_object' },
+    try {
+      const message = await anthropic.messages.create({
+        model: MODEL,
+        max_tokens: 1024,
         messages: [
           {
             role: 'user',
             content: [
               { type: 'text', text: prompt },
-              {
-                type: 'image_url',
-                image_url: {
-                  url: `data:${mimeType};base64,${base64}`,
-                },
-              },
+              fileBlock,
             ],
           },
         ],
       });
-
-      raw = completion.choices[0]?.message?.content;
+      raw = message.content[0]?.text;
+    } catch (apiError) {
+      console.error('[SIMULADOR] Error llamando a Claude:', apiError);
+      if (apiError?.status === 413) {
+        return NextResponse.json(
+          { error: 'El archivo es demasiado pesado. Probá con una imagen más liviana o recortada.' },
+          { status: 400 },
+        );
+      }
+      throw apiError;
     }
 
     if (!raw) {
@@ -254,11 +210,9 @@ No agregues texto adicional.
       );
     }
 
-    let data;
-    try {
-      data = JSON.parse(raw);
-    } catch (err) {
-      console.error('[SIMULADOR] Error parseando JSON de OpenAI:', raw);
+    const data = extraerJSON(raw);
+    if (!data) {
+      console.error('[SIMULADOR] Error parseando JSON de Claude:', raw);
       return NextResponse.json(
         { error: 'La IA no devolvió JSON válido.' },
         { status: 500 },
@@ -269,10 +223,7 @@ No agregues texto adicional.
 
     if (!values) {
       return NextResponse.json(
-        {
-          error:
-            'No se pudo encontrar la evolución de consumo (tabla o gráfico de kWh por mes) en la factura.',
-        },
+        { error: 'No se pudo encontrar la evolución de consumo (tabla o gráfico de kWh por mes) en la factura.' },
         { status: 400 },
       );
     }
@@ -293,17 +244,13 @@ No agregues texto adicional.
       return num;
     });
 
-    const consumo_12_meses_kwh = numbers.reduce(
-      (acc, val) => acc + val,
-      0,
-    );
+    const consumo_12_meses_kwh = numbers.reduce((acc, val) => acc + val, 0);
 
     const { inversion_usd, nro_paneles, potencia_calculada } =
       calcularInversionUSD(consumo_12_meses_kwh);
 
     const ahorro_anual_usd = calcularAhorroAnualUSD(consumo_12_meses_kwh);
 
-    // ROI % = ahorro anual USD / inversión USD (en %). Plazo repago (años) = inversión USD / ahorro anual USD
     const roi_pct =
       inversion_usd > 0 && ahorro_anual_usd > 0
         ? Math.round((ahorro_anual_usd / inversion_usd) * 10000) / 100
@@ -313,7 +260,7 @@ No agregues texto adicional.
         ? Math.round((inversion_usd / ahorro_anual_usd) * 100) / 100
         : null;
 
-    // Si tenemos email del usuario y Resend configurado, reenviamos la factura al equipo de Sunergys
+    // Reenviar la factura al equipo de Sunergys por email
     if (email && process.env.RESEND_API_KEY) {
       try {
         const { Resend } = require('resend');
@@ -357,33 +304,17 @@ No agregues texto adicional.
           </div>
         `;
 
-        const emailText = `
-Nueva simulación desde la web
-
-Email del usuario: ${email}
-Consumo últimos 12 meses (kWh): ${consumo_12_meses_kwh}
-Inversión estimada (USD): ${inversion_usd}
-Ahorro anual estimado (USD): ${ahorro_anual_usd}
-ROI estimado (%): ${roi_pct ?? 'N/D'}
-Plazo de repago (años): ${plazo_repago_anios ?? 'N/D'}
-
-Se adjunta la imagen de la factura enviada por el usuario.
-        `.trim();
-
         const emailData = {
           from: process.env.FROM_EMAIL || 'noreply@sunergys.com',
           to: 'contacto@sunergys.com',
           subject: '[SIMULADOR] Nueva simulación con factura adjunta',
           html: emailHtml,
-          text: emailText,
+          text: `Nueva simulación\nEmail: ${email}\nConsumo: ${consumo_12_meses_kwh} kWh\nInversión: ${inversion_usd} USD\nAhorro anual: ${ahorro_anual_usd} USD\nROI: ${roi_pct ?? 'N/D'}%\nRepago: ${plazo_repago_anios ?? 'N/D'} años`,
         };
 
         if (file) {
           emailData.attachments = [
-            {
-              filename: file.name || 'factura-ute.jpg',
-              content: buffer,
-            },
+            { filename: file.name || 'factura-ute.jpg', content: buffer },
           ];
         }
 
@@ -410,4 +341,3 @@ Se adjunta la imagen de la factura enviada por el usuario.
     );
   }
 }
-
