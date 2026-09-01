@@ -96,6 +96,7 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const email = formData.get('email');
+    const phone = formData.get('phone');
     const file = formData.get('file');
 
     if (!file || typeof file === 'string') {
@@ -287,6 +288,10 @@ No agregues texto adicional.
                 <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${email}</td>
               </tr>
               <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Teléfono del usuario:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${phone || 'No informado'}</td>
+              </tr>
+              <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #333;">Consumo últimos 12 meses (kWh):</td>
                 <td style="padding: 10px; border-bottom: 1px solid #eee; color: #666;">${consumo_12_meses_kwh}</td>
               </tr>
@@ -318,7 +323,7 @@ No agregues texto adicional.
           to: 'contacto@sunergys.com',
           subject: '[SIMULADOR] Nueva simulación con factura adjunta',
           html: emailHtml,
-          text: `Nueva simulación\nEmail: ${email}\nConsumo: ${consumo_12_meses_kwh} kWh\nInversión: ${inversion_usd} USD\nAhorro anual: ${ahorro_anual_usd} USD\nROI: ${roi_pct ?? 'N/D'}%\nRepago: ${plazo_repago_anios ?? 'N/D'} años`,
+          text: `Nueva simulación\nEmail: ${email}\nTeléfono: ${phone || 'No informado'}\nConsumo: ${consumo_12_meses_kwh} kWh\nInversión: ${inversion_usd} USD\nAhorro anual: ${ahorro_anual_usd} USD\nROI: ${roi_pct ?? 'N/D'}%\nRepago: ${plazo_repago_anios ?? 'N/D'} años`,
         };
 
         if (file) {

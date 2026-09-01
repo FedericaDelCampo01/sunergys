@@ -1,6 +1,7 @@
 import "./globals.css";
 import FloatingSimulatorButton from "@/components/common/floating-simulator-button";
 import LayoutEffects from "@/components/common/layout-effects";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
     title: "Sunergys | Soluciones de Energia Solar",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
                 <LayoutEffects />
                 {children}
                 <FloatingSimulatorButton />
+                <Analytics />
             </body>
         </html>
     );

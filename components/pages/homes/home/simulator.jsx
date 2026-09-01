@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 const Simulator = () => {
     const [file, setFile] = useState(null);
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
@@ -49,6 +50,15 @@ const Simulator = () => {
                 return;
             }
 
+            // Validar que el teléfono esté cargado antes de usar el simulador
+            const phoneDigits = phone.replace(/\D/g, '');
+            if (phoneDigits.length < 8) {
+                setError('Por favor ingresá un teléfono o celular válido antes de subir tu factura.');
+                e.target.value = '';
+                setFile(null);
+                return;
+            }
+
             setFile(selectedFile);
             setResults(null);
             setError(null);
@@ -58,6 +68,7 @@ const Simulator = () => {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 formData.append('email', email);
+                formData.append('phone', phone);
 
                 const response = await fetch('/api/simulador', {
                     method: 'POST',
@@ -210,7 +221,7 @@ const Simulator = () => {
                                     marginBottom: '8px',
                                     fontWeight: 500
                                 }}>
-                                    Tu email (obligatorio para usar el simulador)
+                                    Tu email <span style={{ color: 'var(--primary-color-2)' }}>*</span>
                                 </label>
                                 <input
                                     type="email"
@@ -239,6 +250,51 @@ const Simulator = () => {
                                     marginBottom: 0
                                 }}>
                                     Usamos este correo para asociar tu simulación y enviar la factura a nuestro equipo.
+                                </p>
+                            </div>
+
+                            {/* Campo de teléfono obligatorio */}
+                            <div style={{
+                                maxWidth: '500px',
+                                margin: '0 auto 30px',
+                                textAlign: 'left'
+                            }}>
+                                <label style={{
+                                    display: 'block',
+                                    fontSize: '14px',
+                                    color: 'rgba(255, 255, 255, 0.9)',
+                                    marginBottom: '8px',
+                                    fontWeight: 500
+                                }}>
+                                    Teléfono o celular <span style={{ color: 'var(--primary-color-2)' }}>*</span>
+                                </label>
+                                <input
+                                    type="tel"
+                                    value={phone}
+                                    onChange={(e) => {
+                                        setPhone(e.target.value.replace(/[^0-9+\s\-()]/g, ''));
+                                        if (error) setError(null);
+                                    }}
+                                    required
+                                    placeholder="+598 99 123 456"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 14px',
+                                        borderRadius: '8px',
+                                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                                        background: 'rgba(0, 0, 0, 0.4)',
+                                        color: 'var(--text-white)',
+                                        fontSize: '14px',
+                                        outline: 'none'
+                                    }}
+                                />
+                                <p style={{
+                                    fontSize: '12px',
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    marginTop: '6px',
+                                    marginBottom: 0
+                                }}>
+                                    Te contactamos por este medio para ampliarte la información de tu simulación.
                                 </p>
                             </div>
 
